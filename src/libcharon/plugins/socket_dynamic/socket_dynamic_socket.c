@@ -69,6 +69,11 @@ struct private_socket_dynamic_socket_t {
 	socket_dynamic_socket_t public;
 
 	/**
+	 * Configured port for NAT-T (or random, if initially 0)
+	 */
+	uint16_t natt;
+
+	/**
 	 * Hashtable of bound sockets
 	 */
 	hashtable_t *sockets;
@@ -641,7 +646,7 @@ METHOD(socket_t, get_port, uint16_t,
 {
 	/* we return 0 here for users that have no explicit port configured, the
 	 * sender will default to the default port in this case */
-	return 0;
+	return nat_t ? this->natt : 0;
 }
 
 METHOD(socket_t, supported_families, socket_family_t,
@@ -691,6 +696,8 @@ socket_dynamic_socket_t *socket_dynamic_socket_create()
 			},
 		},
 		.lock = rwlock_create(RWLOCK_TYPE_DEFAULT),
+		.natt = lib->settings->get_int(lib->settings,
+							"%s.port_nat_t", CHARON_NATT_PORT, lib->ns),
 		.max_packet = lib->settings->get_int(lib->settings,
 								"%s.max_packet", PACKET_MAX_DEFAULT, lib->ns),
 	);
@@ -703,6 +710,15 @@ socket_dynamic_socket_t *socket_dynamic_socket_create()
 	}
 
 	this->sockets = hashtable_create((void*)hash, (void*)equals, 8);
+	
+	if (!find_socket(this, AF_INET, this->natt))
+	{
+		DBG1(DBG_NET, "creating natt socket in dynamic socket failed");
+		free(this);
+		return NULL;
+	}
+	DBG1(DBG_NET, "creating natt socket in dynamic socket succeed");
 
 	return &this->public;
 }
+

@@ -233,8 +233,8 @@ ARG_ENABL_SET([kernel-pfroute], [enable the PF_ROUTE kernel interface.])
 ARG_ENABL_SET([kernel-iph],     [enable the Windows IP Helper based networking backend.])
 ARG_ENABL_SET([kernel-libipsec],[enable the libipsec kernel interface.])
 ARG_ENABL_SET([kernel-wfp],     [enable the Windows Filtering Platform IPsec backend.])
-ARG_DISBL_SET([socket-default], [disable default socket implementation for charon.])
-ARG_ENABL_SET([socket-dynamic], [enable dynamic socket implementation for charon])
+ARG_ENABL_SET([socket-default], [enable default socket implementation for charon.])
+ARG_DISBL_SET([socket-dynamic], [disable dynamic socket implementation for charon])
 ARG_ENABL_SET([socket-win],     [enable Winsock2 based socket implementation for charon])
 # configuration/control plugins
 ARG_DISBL_SET([stroke],         [disable charons stroke configuration backend.])
@@ -305,7 +305,7 @@ ARG_ENABL_SET([nm],             [enable NetworkManager backend.])
 ARG_DISBL_SET([pki],            [disable pki certificate utility.])
 ARG_DISBL_SET([scripts],        [disable additional utilities (found in directory scripts).])
 ARG_ENABL_SET([svc],            [enable charon Windows service.])
-ARG_ENABL_SET([systemd],        [enable systemd specific IKE daemon charon-systemd.])
+ARG_DISBL_SET([systemd],        [disable systemd specific IKE daemon charon-systemd.])
 ARG_DISBL_SET([swanctl],        [disable swanctl configuration and control tool.])
 ARG_ENABL_SET([tkm],            [enable Trusted Key Manager support.])
 ARG_ENABL_SET([cert-enroll],    [enable automatic certificate enrollment via EST or SCEP.])
@@ -376,6 +376,7 @@ AC_SUBST(PLUGIN_CFLAGS)
 AC_PROG_CC
 AM_PROG_CC_C_O
 
+m4_pattern_allow(AC_LIB_PREFIX)
 AC_LIB_PREFIX
 AC_C_BIGENDIAN
 
