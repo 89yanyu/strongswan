@@ -2154,6 +2154,7 @@ AC_CONFIG_FILES([
 	src/libcharon/plugins/vici/perl/Makefile
 	src/libcharon/plugins/vici/python/Makefile
 	src/libcharon/plugins/updown/Makefile
+    src/libcharon/plugins/latunnel/Makefile
 	src/libcharon/plugins/dhcp/Makefile
 	src/libcharon/plugins/load_tester/Makefile
 	src/libcharon/plugins/resolve/Makefile

@@ -321,6 +321,11 @@ if MONOLITHIC
 endif
 endif
 
+SUBDIRS += plugins/latunnel
+if MONOLITHIC
+  libcharon_la_LIBADD += plugins/latunnel/libstrongswan-latunnel.la
+endif
+
 if USE_EXT_AUTH
   SUBDIRS += plugins/ext_auth
 if MONOLITHIC
